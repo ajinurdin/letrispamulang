@@ -58,6 +58,12 @@
         .jurusan-code {
             font-size: clamp(1.25rem, 2.5vh, 1.5rem);
         }
+
+        /* Hover effect untuk tombol fullscreen */
+        .btn-fullscreen:hover {
+            transform: scale(1.1);
+            background-color: rgba(255,255,255,0.2);
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-900 h-screen w-screen flex flex-col font-sans selection:bg-letrisYellow selection:text-letrisBlue overflow-hidden">
@@ -76,9 +82,17 @@
             </div>
         </div>
         
-        <div class="pulse-badge bg-letrisRed px-6 py-2 lg:px-8 lg:py-3 rounded-xl shadow-lg border-2 border-white transform rotate-1 hidden md:block">
-            <p class="text-white text-[10px] lg:text-xs font-bold uppercase tracking-widest text-center mb-1">STATUS SAAT INI</p>
-            <h2 class="text-xl lg:text-3xl font-black text-white uppercase tracking-tighter">GELOMBANG 2</h2>
+        <!-- BAGIAN KANAN HEADER: Status & Tombol Fullscreen -->
+        <div class="flex items-center gap-4 lg:gap-6">
+            <div class="pulse-badge bg-letrisRed px-6 py-2 lg:px-8 lg:py-3 rounded-xl shadow-lg border-2 border-white transform rotate-1 hidden md:block">
+                <p class="text-white text-[10px] lg:text-xs font-bold uppercase tracking-widest text-center mb-1">STATUS SAAT INI</p>
+                <h2 class="text-xl lg:text-3xl font-black text-white uppercase tracking-tighter">GELOMBANG 2</h2>
+            </div>
+
+            <!-- TOMBOL FULLSCREEN PINDAH KE SINI -->
+            <button onclick="toggleFullScreen()" class="btn-fullscreen w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center rounded-full bg-white/10 text-white border border-white/20 transition-all duration-200 backdrop-blur-sm shadow-lg" title="Tampilan Penuh">
+                <i class="fas fa-expand text-lg lg:text-xl"></i>
+            </button>
         </div>
     </header>
 
@@ -305,7 +319,7 @@
         </div>
     </footer>
 
-    <!-- SCRIPT CLOCK -->
+    <!-- SCRIPT CLOCK & FULLSCREEN -->
     <script>
         function updateTime() {
             const now = new Date();
@@ -315,6 +329,20 @@
             document.getElementById('clock').innerText = now.toLocaleTimeString('id-ID', timeOptions).replace(/\./g, ':');
             document.getElementById('date').innerText = now.toLocaleDateString('id-ID', dateOptions).toUpperCase();
         }
+
+        // FUNGSI FULLSCREEN
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
         setInterval(updateTime, 1000);
         updateTime();
     </script>
