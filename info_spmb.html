@@ -14,6 +14,7 @@
                         letrisBlue: '#0f2666',
                         letrisYellow: '#facc15',
                         letrisRed: '#dc2626',
+                        darkHeader: '#0f172a', // Warna Slate-900 untuk kontras tinggi
                     },
                     fontFamily: {
                         sans: ['Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
@@ -23,6 +24,7 @@
         }
     </script>
     <style>
+        /* Mencegah scrollbar muncul di TV */
         body { overflow: hidden; }
         
         .glass-panel {
@@ -48,40 +50,47 @@
             0% { background-position: 1rem 0; }
             100% { background-position: 0 0; }
         }
+
+        /* Tweak agar teks tidak terlalu rapat di layar kecil */
+        .jurusan-label {
+            font-size: clamp(0.7rem, 1.5vh, 0.875rem);
+        }
+        .jurusan-code {
+            font-size: clamp(1.25rem, 2.5vh, 1.5rem);
+        }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-900 h-screen w-screen flex flex-col font-sans selection:bg-letrisYellow selection:text-letrisBlue">
+<body class="bg-gray-100 text-gray-900 h-screen w-screen flex flex-col font-sans selection:bg-letrisYellow selection:text-letrisBlue overflow-hidden">
 
-    <!-- HEADER -->
-    <header class="h-[12%] bg-letrisBlue text-white shadow-2xl z-10 relative flex items-center justify-between px-8 border-b-4 border-letrisYellow">
+    <!-- HEADER (Tinggi adaptif 12vh) -->
+    <!-- MENGGUNAKAN bg-darkHeader (Hitam Kebiruan Gelap) agar logo biru kontras -->
+    <header class="h-[12vh] min-h-[80px] bg-darkHeader text-white shadow-2xl z-10 relative flex items-center justify-between px-6 border-b-4 border-letrisYellow">
         <div class="flex items-center gap-4">
-            <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center shadow-inner border-2 border-letrisYellow overflow-hidden p-1">
-                <img src="https://lh3.googleusercontent.com/d/1rrJLcaxEYQ--cGL4d1G6u0V7NDVX6GF4" alt="Logo SMK Letris" class="w-full h-full object-contain">
+            <!-- Logo Tanpa Lingkaran/Background Shape -->
+            <div class="h-[10vh] w-auto min-h-[60px] flex items-center justify-center py-1">
+                <img src="https://lh3.googleusercontent.com/d/1rrJLcaxEYQ--cGL4d1G6u0V7NDVX6GF4" alt="Logo SMK Letris" class="h-full w-auto object-contain filter drop-shadow-lg">
             </div>
             <div>
-                <h1 class="text-3xl lg:text-4xl font-black tracking-tight uppercase leading-none">SMK LETRIS PAMULANG</h1>
-                <p class="text-letrisYellow font-semibold text-lg tracking-wide mt-1">SPMB TAHUN AJARAN 2026/2027</p>
+                <h1 class="text-2xl lg:text-4xl font-black tracking-tight uppercase leading-none text-white">SMK LETRIS PAMULANG</h1>
+                <p class="text-letrisYellow font-semibold text-sm lg:text-lg tracking-wide mt-1">SPMB TAHUN AJARAN 2026/2027</p>
             </div>
         </div>
         
-        <div class="pulse-badge bg-letrisRed px-8 py-3 rounded-xl shadow-lg border-2 border-white transform rotate-1">
-            <p class="text-white text-xs font-bold uppercase tracking-widest text-center mb-1">STATUS SAAT INI</p>
-            <h2 class="text-3xl font-black text-white uppercase tracking-tighter">GELOMBANG 2</h2>
+        <div class="pulse-badge bg-letrisRed px-6 py-2 lg:px-8 lg:py-3 rounded-xl shadow-lg border-2 border-white transform rotate-1 hidden md:block">
+            <p class="text-white text-[10px] lg:text-xs font-bold uppercase tracking-widest text-center mb-1">STATUS SAAT INI</p>
+            <h2 class="text-xl lg:text-3xl font-black text-white uppercase tracking-tighter">GELOMBANG 2</h2>
         </div>
     </header>
 
-    <!-- CONTENT -->
-    <main class="h-[78%] w-full p-4 lg:p-6 grid grid-cols-12 gap-6 bg-gradient-to-br from-gray-200 to-gray-300">
+    <!-- CONTENT (Tinggi adaptif 78vh) -->
+    <main class="h-[78vh] w-full p-3 lg:p-4 grid grid-cols-12 gap-4 bg-gradient-to-br from-gray-200 to-gray-300">
         
-        <!-- VIDEO PLAYER CONTAINER -->
-        <div class="col-span-5 flex flex-col h-full gap-4">
-            <div class="glass-panel rounded-2xl p-2 shadow-2xl h-full flex flex-col relative overflow-hidden group">
-                <div class="relative w-full h-full bg-black rounded-xl overflow-hidden shadow-inner border border-gray-600">
+        <!-- VIDEO PLAYER CONTAINER (5 Kolom) -->
+        <div class="col-span-5 flex flex-col h-full">
+            <div class="glass-panel rounded-xl p-2 shadow-2xl h-full flex flex-col relative overflow-hidden group">
+                <div class="relative w-full h-full bg-black rounded-lg overflow-hidden shadow-inner border border-gray-600">
                     
-                    <!-- 
-                        HTML5 Video Player (Cloudinary Direct Link)
-                        Keuntungan: Tanpa Logo YouTube, Loop Mulus, Autoplay Stabil
-                    -->
+                    <!-- HTML5 Video Player (Cloudinary) -->
                     <video 
                         class="w-full h-full object-cover" 
                         autoplay 
@@ -92,180 +101,192 @@
                         Browser Anda tidak mendukung tag video.
                     </video>
                     
-                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform pointer-events-none z-10">
-                        <h3 class="font-bold text-xl"><i class="fas fa-video mr-2 text-letrisYellow"></i>PHBI</h3>
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 lg:p-6 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform pointer-events-none z-10">
+                        <h3 class="font-bold text-lg lg:text-xl"><i class="fas fa-video mr-2 text-letrisYellow"></i>PHBI</h3>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- DATA TABEL -->
+        <!-- DATA TABEL (7 Kolom) -->
         <div class="col-span-7 h-full flex flex-col">
-            <div class="glass-panel rounded-2xl shadow-2xl h-full flex flex-col overflow-hidden border-t-4 border-letrisBlue">
-                <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex justify-between items-center shadow-sm z-10">
-                    <h2 class="text-2xl font-black text-letrisBlue flex items-center">
-                        <i class="fas fa-chart-bar mr-3 text-letrisYellow"></i> UPDATE PENDAFTAR
+            <div class="glass-panel rounded-xl shadow-2xl h-full flex flex-col overflow-hidden border-t-4 border-letrisBlue">
+                <!-- Header Tabel -->
+                <div class="bg-gray-50 px-4 py-2 lg:py-3 border-b border-gray-200 flex justify-between items-center shadow-sm z-10 shrink-0">
+                    <h2 class="text-xl lg:text-2xl font-black text-letrisBlue flex items-center">
+                        <i class="fas fa-chart-bar mr-2 text-letrisYellow"></i> UPDATE PENDAFTAR
                     </h2>
-                    <div class="flex gap-4 text-sm font-bold text-gray-500 uppercase tracking-wider">
-                        <span class="flex items-center"><span class="w-3 h-3 bg-green-500 rounded-full mr-1"></span> Terisi</span>
-                        <span class="flex items-center"><span class="w-3 h-3 bg-gray-200 rounded-full mr-1"></span> Kosong</span>
+                    <div class="flex gap-3 text-xs lg:text-sm font-bold text-gray-500 uppercase tracking-wider">
+                        <span class="flex items-center"><span class="w-2 h-2 lg:w-3 lg:h-3 bg-green-500 rounded-full mr-1"></span> Terisi</span>
+                        <span class="flex items-center"><span class="w-2 h-2 lg:w-3 lg:h-3 bg-gray-200 rounded-full mr-1"></span> Kosong</span>
                     </div>
                 </div>
 
-                <div class="flex-grow overflow-hidden relative p-4 bg-white">
-                    <table class="w-full h-full border-collapse">
-                        <tbody class="flex flex-col h-full justify-between">
-                            <tr class="flex text-gray-400 text-sm font-bold uppercase tracking-wider border-b-2 border-gray-100 pb-2 mb-2">
-                                <td class="w-16">Kode</td>
-                                <td class="flex-1">Jurusan</td>
-                                <td class="w-32 text-center">Rasio</td>
-                                <td class="w-48 text-right">Progress</td>
-                            </tr>
+                <!-- Konten Tabel Flex (H-Full) -->
+                <div class="flex-grow overflow-hidden relative p-2 lg:p-3 bg-white">
+                    <!-- Menggunakan Flex Column agar jarak antar baris dinamis (justify-between) -->
+                    <div class="flex flex-col h-full w-full justify-between gap-1">
+                        
+                        <!-- Header Kolom -->
+                        <div class="flex text-gray-400 text-xs font-bold uppercase tracking-wider border-b-2 border-gray-100 pb-1">
+                            <div class="flex-1 pl-2">Program Keahlian</div>
+                            <div class="w-24 lg:w-32 text-center">Rasio</div>
+                            <div class="w-32 lg:w-48 text-right pr-2">Progress</div>
+                        </div>
 
-                            <!-- DATA ROWS -->
-                            <tr class="flex items-center bg-blue-50/50 rounded-lg p-3 mb-2 border-l-4 border-blue-600">
-                                <td class="w-16 font-black text-2xl text-letrisBlue">DKV</td>
-                                <td class="flex-1 flex flex-col justify-center px-2">
-                                    <span class="font-bold text-lg leading-tight text-gray-800">Desain Komunikasi Visual</span>
-                                </td>
-                                <td class="w-32 text-center flex flex-col justify-center">
-                                    <span class="text-2xl font-black text-gray-800">93</span>
-                                    <span class="text-xs text-gray-500 font-bold">dari 210</span>
-                                </td>
-                                <td class="w-48 px-2 flex items-center">
-                                    <div class="w-full bg-gray-200 rounded-full h-6 shadow-inner relative overflow-hidden">
-                                        <div class="bg-blue-600 h-6 rounded-full progress-striped flex items-center justify-end pr-2 text-[10px] text-white font-bold" style="width: 44%">44%</div>
-                                    </div>
-                                </td>
-                            </tr>
+                        <!-- LIST JURUSAN (Looping Flex-1 agar mengisi ruang kosong) -->
+                        
+                        <!-- DKV -->
+                        <div class="flex-1 flex items-center bg-blue-50/50 rounded-lg px-2 lg:px-3 border-l-4 border-blue-600 min-h-0">
+                            <div class="flex-1 flex flex-col justify-center">
+                                <div class="font-black text-letrisBlue leading-none jurusan-code">DKV</div>
+                                <div class="font-medium text-gray-500 leading-tight jurusan-label">Desain Komunikasi Visual</div>
+                            </div>
+                            <div class="w-24 lg:w-32 text-center flex flex-col justify-center">
+                                <span class="text-lg lg:text-2xl font-black text-gray-800 leading-none">93</span>
+                                <span class="text-[10px] lg:text-xs text-gray-500 font-bold">dari 210</span>
+                            </div>
+                            <div class="w-32 lg:w-48 pl-2 flex items-center">
+                                <div class="w-full bg-gray-200 rounded-full h-4 lg:h-6 shadow-inner relative overflow-hidden">
+                                    <div class="bg-blue-600 h-full rounded-full progress-striped flex items-center justify-end pr-2 text-[9px] lg:text-[10px] text-white font-bold" style="width: 44%">44%</div>
+                                </div>
+                            </div>
+                        </div>
 
-                            <tr class="flex items-center bg-purple-50/50 rounded-lg p-2 mb-2 border-l-4 border-purple-600">
-                                <td class="w-16 font-black text-2xl text-letrisBlue">PPLG</td>
-                                <td class="flex-1 flex flex-col justify-center px-2">
-                                    <span class="font-bold text-lg leading-tight text-gray-800">Pengembangan PL & Gim</span>
-                                </td>
-                                <td class="w-32 text-center flex flex-col justify-center">
-                                    <span class="text-2xl font-black text-gray-800">49</span>
-                                    <span class="text-xs text-gray-500 font-bold">dari 60</span>
-                                </td>
-                                <td class="w-48 px-2 flex items-center">
-                                    <div class="w-full bg-gray-200 rounded-full h-6 shadow-inner relative overflow-hidden">
-                                        <div class="bg-purple-600 h-6 rounded-full progress-striped flex items-center justify-end pr-2 text-[10px] text-white font-bold" style="width: 81%">81%</div>
-                                    </div>
-                                </td>
-                            </tr>
+                        <!-- PPLG -->
+                        <div class="flex-1 flex items-center bg-purple-50/50 rounded-lg px-2 lg:px-3 border-l-4 border-purple-600 min-h-0">
+                            <div class="flex-1 flex flex-col justify-center">
+                                <div class="font-black text-letrisBlue leading-none jurusan-code">PPLG</div>
+                                <div class="font-medium text-gray-500 leading-tight jurusan-label">Pengembangan Perangkat Lunak & Gim</div>
+                            </div>
+                            <div class="w-24 lg:w-32 text-center flex flex-col justify-center">
+                                <span class="text-lg lg:text-2xl font-black text-gray-800 leading-none">49</span>
+                                <span class="text-[10px] lg:text-xs text-gray-500 font-bold">dari 60</span>
+                            </div>
+                            <div class="w-32 lg:w-48 pl-2 flex items-center">
+                                <div class="w-full bg-gray-200 rounded-full h-4 lg:h-6 shadow-inner relative overflow-hidden">
+                                    <div class="bg-purple-600 h-full rounded-full progress-striped flex items-center justify-end pr-2 text-[9px] lg:text-[10px] text-white font-bold" style="width: 81%">81%</div>
+                                </div>
+                            </div>
+                        </div>
 
-                            <tr class="flex items-center bg-orange-50/50 rounded-lg p-2 mb-2 border-l-4 border-orange-500">
-                                <td class="w-16 font-black text-2xl text-letrisBlue">TJKT</td>
-                                <td class="flex-1 flex flex-col justify-center px-2">
-                                    <span class="font-bold text-lg leading-tight text-gray-800">Teknik Jaringan Komp.</span>
-                                </td>
-                                <td class="w-32 text-center flex flex-col justify-center">
-                                    <span class="text-2xl font-black text-gray-800">43</span>
-                                    <span class="text-xs text-gray-500 font-bold">dari 60</span>
-                                </td>
-                                <td class="w-48 px-2 flex items-center">
-                                    <div class="w-full bg-gray-200 rounded-full h-6 shadow-inner relative overflow-hidden">
-                                        <div class="bg-orange-500 h-6 rounded-full progress-striped flex items-center justify-end pr-2 text-[10px] text-white font-bold" style="width: 71%">71%</div>
-                                    </div>
-                                </td>
-                            </tr>
+                        <!-- TJKT -->
+                        <div class="flex-1 flex items-center bg-orange-50/50 rounded-lg px-2 lg:px-3 border-l-4 border-orange-500 min-h-0">
+                            <div class="flex-1 flex flex-col justify-center">
+                                <div class="font-black text-letrisBlue leading-none jurusan-code">TJKT</div>
+                                <div class="font-medium text-gray-500 leading-tight jurusan-label">Teknik Jaringan Komputer & Telekomunikasi</div>
+                            </div>
+                            <div class="w-24 lg:w-32 text-center flex flex-col justify-center">
+                                <span class="text-lg lg:text-2xl font-black text-gray-800 leading-none">43</span>
+                                <span class="text-[10px] lg:text-xs text-gray-500 font-bold">dari 60</span>
+                            </div>
+                            <div class="w-32 lg:w-48 pl-2 flex items-center">
+                                <div class="w-full bg-gray-200 rounded-full h-4 lg:h-6 shadow-inner relative overflow-hidden">
+                                    <div class="bg-orange-500 h-full rounded-full progress-striped flex items-center justify-end pr-2 text-[9px] lg:text-[10px] text-white font-bold" style="width: 71%">71%</div>
+                                </div>
+                            </div>
+                        </div>
 
-                             <tr class="flex items-center bg-teal-50/50 rounded-lg p-2 mb-2 border-l-4 border-teal-500">
-                                <td class="w-16 font-black text-2xl text-letrisBlue">MPLB</td>
-                                <td class="flex-1 flex flex-col justify-center px-2">
-                                    <span class="font-bold text-lg leading-tight text-gray-800">Manajemen Perkantoran</span>
-                                </td>
-                                <td class="w-32 text-center flex flex-col justify-center">
-                                    <span class="text-2xl font-black text-gray-800">49</span>
-                                    <span class="text-xs text-gray-500 font-bold">dari 90</span>
-                                </td>
-                                <td class="w-48 px-2 flex items-center">
-                                    <div class="w-full bg-gray-200 rounded-full h-6 shadow-inner relative overflow-hidden">
-                                        <div class="bg-teal-500 h-6 rounded-full progress-striped flex items-center justify-end pr-2 text-[10px] text-white font-bold" style="width: 54%">54%</div>
-                                    </div>
-                                </td>
-                            </tr>
+                        <!-- MPLB -->
+                        <div class="flex-1 flex items-center bg-teal-50/50 rounded-lg px-2 lg:px-3 border-l-4 border-teal-500 min-h-0">
+                            <div class="flex-1 flex flex-col justify-center">
+                                <div class="font-black text-letrisBlue leading-none jurusan-code">MPLB</div>
+                                <div class="font-medium text-gray-500 leading-tight jurusan-label">Manajemen Perkantoran & Layanan Bisnis</div>
+                            </div>
+                            <div class="w-24 lg:w-32 text-center flex flex-col justify-center">
+                                <span class="text-lg lg:text-2xl font-black text-gray-800 leading-none">49</span>
+                                <span class="text-[10px] lg:text-xs text-gray-500 font-bold">dari 90</span>
+                            </div>
+                            <div class="w-32 lg:w-48 pl-2 flex items-center">
+                                <div class="w-full bg-gray-200 rounded-full h-4 lg:h-6 shadow-inner relative overflow-hidden">
+                                    <div class="bg-teal-500 h-full rounded-full progress-striped flex items-center justify-end pr-2 text-[9px] lg:text-[10px] text-white font-bold" style="width: 54%">54%</div>
+                                </div>
+                            </div>
+                        </div>
 
-                            <tr class="flex items-center bg-indigo-50/50 rounded-lg p-2 mb-2 border-l-4 border-indigo-500">
-                                <td class="w-16 font-black text-2xl text-letrisBlue">AKL</td>
-                                <td class="flex-1 flex flex-col justify-center px-2">
-                                    <span class="font-bold text-lg leading-tight text-gray-800">Akuntansi Keuangan</span>
-                                </td>
-                                <td class="w-32 text-center flex flex-col justify-center">
-                                    <span class="text-2xl font-black text-gray-800">22</span>
-                                    <span class="text-xs text-gray-500 font-bold">dari 60</span>
-                                </td>
-                                <td class="w-48 px-2 flex items-center">
-                                    <div class="w-full bg-gray-200 rounded-full h-6 shadow-inner relative overflow-hidden">
-                                        <div class="bg-indigo-500 h-6 rounded-full flex items-center justify-end pr-2 text-[10px] text-white font-bold" style="width: 36%">36%</div>
-                                    </div>
-                                </td>
-                            </tr>
+                        <!-- AKL -->
+                        <div class="flex-1 flex items-center bg-indigo-50/50 rounded-lg px-2 lg:px-3 border-l-4 border-indigo-500 min-h-0">
+                            <div class="flex-1 flex flex-col justify-center">
+                                <div class="font-black text-letrisBlue leading-none jurusan-code">AKL</div>
+                                <div class="font-medium text-gray-500 leading-tight jurusan-label">Akuntansi Keuangan Lembaga</div>
+                            </div>
+                            <div class="w-24 lg:w-32 text-center flex flex-col justify-center">
+                                <span class="text-lg lg:text-2xl font-black text-gray-800 leading-none">22</span>
+                                <span class="text-[10px] lg:text-xs text-gray-500 font-bold">dari 60</span>
+                            </div>
+                            <div class="w-32 lg:w-48 pl-2 flex items-center">
+                                <div class="w-full bg-gray-200 rounded-full h-4 lg:h-6 shadow-inner relative overflow-hidden">
+                                    <div class="bg-indigo-500 h-full rounded-full flex items-center justify-end pr-2 text-[9px] lg:text-[10px] text-white font-bold" style="width: 36%">36%</div>
+                                </div>
+                            </div>
+                        </div>
 
-                            <tr class="flex items-center bg-pink-50/50 rounded-lg p-2 mb-2 border-l-4 border-pink-500">
-                                <td class="w-16 font-black text-2xl text-letrisBlue">BD</td>
-                                <td class="flex-1 flex flex-col justify-center px-2">
-                                    <span class="font-bold text-lg leading-tight text-gray-800">Bisnis Digital</span>
-                                </td>
-                                <td class="w-32 text-center flex flex-col justify-center">
-                                    <span class="text-2xl font-black text-gray-800">11</span>
-                                    <span class="text-xs text-gray-500 font-bold">dari 60</span>
-                                </td>
-                                <td class="w-48 px-2 flex items-center">
-                                    <div class="w-full bg-gray-200 rounded-full h-6 shadow-inner relative overflow-hidden">
-                                        <div class="bg-pink-500 h-6 rounded-full flex items-center justify-end pr-2 text-[10px] text-white font-bold" style="width: 18%">18%</div>
-                                    </div>
-                                </td>
-                            </tr>
+                        <!-- BD -->
+                        <div class="flex-1 flex items-center bg-pink-50/50 rounded-lg px-2 lg:px-3 border-l-4 border-pink-500 min-h-0">
+                            <div class="flex-1 flex flex-col justify-center">
+                                <div class="font-black text-letrisBlue leading-none jurusan-code">BD</div>
+                                <div class="font-medium text-gray-500 leading-tight jurusan-label">Bisnis Digital</div>
+                            </div>
+                            <div class="w-24 lg:w-32 text-center flex flex-col justify-center">
+                                <span class="text-lg lg:text-2xl font-black text-gray-800 leading-none">11</span>
+                                <span class="text-[10px] lg:text-xs text-gray-500 font-bold">dari 60</span>
+                            </div>
+                            <div class="w-32 lg:w-48 pl-2 flex items-center">
+                                <div class="w-full bg-gray-200 rounded-full h-4 lg:h-6 shadow-inner relative overflow-hidden">
+                                    <div class="bg-pink-500 h-full rounded-full flex items-center justify-end pr-2 text-[9px] lg:text-[10px] text-white font-bold" style="width: 18%">18%</div>
+                                </div>
+                            </div>
+                        </div>
 
-                             <tr class="flex items-center bg-emerald-50/50 rounded-lg p-2 mb-2 border-l-4 border-emerald-500">
-                                <td class="w-16 font-black text-2xl text-letrisBlue">KP</td>
-                                <td class="flex-1 flex flex-col justify-center px-2">
-                                    <span class="font-bold text-lg leading-tight text-gray-800">Keperawatan</span>
-                                </td>
-                                <td class="w-32 text-center flex flex-col justify-center">
-                                    <span class="text-2xl font-black text-gray-800">48</span>
-                                    <span class="text-xs text-gray-500 font-bold">dari 120</span>
-                                </td>
-                                <td class="w-48 px-2 flex items-center">
-                                    <div class="w-full bg-gray-200 rounded-full h-6 shadow-inner relative overflow-hidden">
-                                        <div class="bg-emerald-500 h-6 rounded-full flex items-center justify-end pr-2 text-[10px] text-white font-bold" style="width: 40%">40%</div>
-                                    </div>
-                                </td>
-                            </tr>
-                            
-                             <tr class="flex items-center bg-cyan-50/50 rounded-lg p-2 border-l-4 border-cyan-500">
-                                <td class="w-16 font-black text-2xl text-letrisBlue">FA</td>
-                                <td class="flex-1 flex flex-col justify-center px-2">
-                                    <span class="font-bold text-lg leading-tight text-gray-800">Farmasi</span>
-                                </td>
-                                <td class="w-32 text-center flex flex-col justify-center">
-                                    <span class="text-2xl font-black text-gray-800">23</span>
-                                    <span class="text-xs text-gray-500 font-bold">dari 90</span>
-                                </td>
-                                <td class="w-48 px-2 flex items-center">
-                                    <div class="w-full bg-gray-200 rounded-full h-6 shadow-inner relative overflow-hidden">
-                                        <div class="bg-cyan-500 h-6 rounded-full flex items-center justify-end pr-2 text-[10px] text-white font-bold" style="width: 25%">25%</div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                        <!-- KP -->
+                        <div class="flex-1 flex items-center bg-emerald-50/50 rounded-lg px-2 lg:px-3 border-l-4 border-emerald-500 min-h-0">
+                            <div class="flex-1 flex flex-col justify-center">
+                                <div class="font-black text-letrisBlue leading-none jurusan-code">KP</div>
+                                <div class="font-medium text-gray-500 leading-tight jurusan-label">Keperawatan</div>
+                            </div>
+                            <div class="w-24 lg:w-32 text-center flex flex-col justify-center">
+                                <span class="text-lg lg:text-2xl font-black text-gray-800 leading-none">48</span>
+                                <span class="text-[10px] lg:text-xs text-gray-500 font-bold">dari 120</span>
+                            </div>
+                            <div class="w-32 lg:w-48 pl-2 flex items-center">
+                                <div class="w-full bg-gray-200 rounded-full h-4 lg:h-6 shadow-inner relative overflow-hidden">
+                                    <div class="bg-emerald-500 h-full rounded-full flex items-center justify-end pr-2 text-[9px] lg:text-[10px] text-white font-bold" style="width: 40%">40%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FA -->
+                        <div class="flex-1 flex items-center bg-cyan-50/50 rounded-lg px-2 lg:px-3 border-l-4 border-cyan-500 min-h-0">
+                            <div class="flex-1 flex flex-col justify-center">
+                                <div class="font-black text-letrisBlue leading-none jurusan-code">FA</div>
+                                <div class="font-medium text-gray-500 leading-tight jurusan-label">Farmasi</div>
+                            </div>
+                            <div class="w-24 lg:w-32 text-center flex flex-col justify-center">
+                                <span class="text-lg lg:text-2xl font-black text-gray-800 leading-none">23</span>
+                                <span class="text-[10px] lg:text-xs text-gray-500 font-bold">dari 90</span>
+                            </div>
+                            <div class="w-32 lg:w-48 pl-2 flex items-center">
+                                <div class="w-full bg-gray-200 rounded-full h-4 lg:h-6 shadow-inner relative overflow-hidden">
+                                    <div class="bg-cyan-500 h-full rounded-full flex items-center justify-end pr-2 text-[9px] lg:text-[10px] text-white font-bold" style="width: 25%">25%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="h-[10%] bg-gray-900 text-white flex items-center justify-between px-8 border-t-4 border-letrisYellow">
+    <!-- FOOTER (Tinggi adaptif 10vh) -->
+    <footer class="h-[10vh] min-h-[60px] bg-gray-900 text-white flex items-center justify-between px-6 border-t-4 border-letrisYellow">
         <div class="flex items-center gap-4">
-            <div class="bg-white/10 p-3 rounded-lg backdrop-blur-sm">
-                <i class="fas fa-map-marked-alt text-2xl text-letrisYellow"></i>
+            <div class="bg-white/10 p-2 lg:p-3 rounded-lg backdrop-blur-sm">
+                <i class="fas fa-map-marked-alt text-xl lg:text-2xl text-letrisYellow"></i>
             </div>
             <div>
-                <h3 class="font-bold text-lg text-letrisYellow">LOKASI KAMPUS</h3>
-                <p class="text-gray-300 text-sm tracking-wide">Jl. Raya Siliwangi No. 55, Pamulang, Tangsel</p>
+                <h3 class="font-bold text-sm lg:text-lg text-letrisYellow">LOKASI SEKOLAH</h3>
+                <p class="text-gray-300 text-xs lg:text-sm tracking-wide">Jl. Raya Siliwangi No. 55, Pamulang, Tangsel</p>
             </div>
         </div>
 
@@ -273,13 +294,13 @@
             <div class="h-full w-px bg-gray-700"></div>
         </div>
 
-        <div class="text-right flex items-center gap-6">
+        <div class="text-right flex items-center gap-4 lg:gap-6">
             <div class="text-right">
-                <div id="date" class="text-gray-400 font-bold uppercase tracking-widest text-sm">SENIN, 01 JANUARI 2024</div>
-                <div id="clock" class="text-4xl font-mono font-bold text-white tracking-widest leading-none mt-1">00:00:00</div>
+                <div id="date" class="text-gray-400 font-bold uppercase tracking-widest text-[10px] lg:text-sm">SENIN, 01 JANUARI 2024</div>
+                <div id="clock" class="text-2xl lg:text-4xl font-mono font-bold text-white tracking-widest leading-none mt-1">00:00:00</div>
             </div>
             <div class="bg-green-600/20 text-green-400 border border-green-500/50 p-2 rounded-lg animate-pulse">
-                <i class="fas fa-circle text-xs"></i> LIVE
+                <i class="fas fa-circle text-[8px] lg:text-xs"></i> <span class="text-xs lg:text-base font-bold">LIVE</span>
             </div>
         </div>
     </footer>
